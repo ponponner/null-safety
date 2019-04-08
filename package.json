@@ -1,0 +1,33 @@
+{
+  "name": "null-safety",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "rollup -c",
+    "build": "npm run build:types && npm run build:js"
+  }, 
+  "main": "dist/null-safe.cjs.js",
+  "module": "dist/null-safe.esm.js",
+  "browser": "dist/null-safe.iife.js",
+  "types": "dist/types/index.d.ts",
+  "author": {
+    "name": "ponponenr"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-typescript": "^7.3.3",
+    "rollup": "^1.9.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.1",
+    "typescript": "^3.4.2"
+  }
+}
