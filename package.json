@@ -8,7 +8,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "rollup -c",
     "build": "npm run build:types && npm run build:js"
-  }, 
+  },
   "main": "dist/null-safe.cjs.js",
   "module": "dist/null-safe.esm.js",
   "browser": "dist/null-safe.iife.js",
@@ -24,10 +24,14 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-typescript": "^7.3.3",
+    "prettier": "1.16.4",
     "rollup": "^1.9.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-node-resolve": "^4.2.1",
+    "tslint": "^5.15.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-plugin-prettier": "2.0.1",
     "typescript": "^3.4.2"
   }
 }
