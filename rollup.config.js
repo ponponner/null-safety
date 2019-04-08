@@ -8,7 +8,7 @@ const extensions = [".js", ".jsx", ".ts", ".tsx"];
 const name = "RollupTypeScriptBabel";
 
 export default {
-  input: "./src/index.ts",
+  input: "./src/null-safety.ts",
 
   // Specify here external modules which you don't want to include in your bundle (for instance: 'lodash', 'moment' etc.)
   // https://rollupjs.org/guide/en#external-e-external
