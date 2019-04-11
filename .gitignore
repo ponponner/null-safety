@@ -1,4 +1,9 @@
 lib
-dist
+dest
 node_modules
+
+# jest
 coverage
+
+# rollup
+.rpt2_cache

@@ -1,24 +1,34 @@
-import NullSafety from '../src/null-safety';
+import { NullSafety } from '../src/null-safety';
+import {
+  msgForMapTest,
+  //
+} from './test-utils';
 
-// ----------------------------------------------------------------------
-// 値の取得、（ジェネリック型変数を処理した結果である）戻り値型についてのテスト
-// Notice:
-// - 戻り値の型については目視で確認する。
-// ----------------------------------------------------------------------
-const getTitle = (source: any) => `returns ${source}`;
+describe.skip('(!! check with eyes) types', () => {
+  // return: string | null | undefined
+  it('ref-comment', () => NullSafety.start('abcdefg').result());
+  // return: null | undefined
+  it('ref-comment', () => NullSafety.start(null).result());
+  // return: null | undefined
+  it('ref-comment', () => NullSafety.start(undefined).result());
+});
 
-// 戻り値の型: string | null | undefined
-test(getTitle('abcdefg'), () => {
-  const source = 'abcdefg';
-  expect(NullSafety.start(source).result()).toBe(source);
-});
-// 戻り値の型: null | undefined
-test(getTitle(null), () => {
-  const source = null;
-  expect(NullSafety.start(source).result()).toBe(source);
-});
-// 戻り値の型: null | undefined
-test(getTitle(undefined), () => {
-  const source = undefined;
-  expect(NullSafety.start(source).result()).toBe(source);
+describe('NullSafety.result(...)', () => {
+  const cases = [
+    'abcdefg',
+    '',
+    0,
+    false,
+    null,
+    undefined,
+    //
+  ];
+  for (const c of cases) {
+    const source = c;
+    const actual = NullSafety.start(source).result();
+    const expected = c;
+    it(msgForMapTest(source, expected), () => {
+      expect(actual).toBe(expected);
+    });
+  }
 });

@@ -1,17 +1,17 @@
 type Getter<TSource, TResult> = (source: TSource) => TResult;
 
 /**
- * プロパティへの`null-safety`かつ`undefined-safety`かつ型安全かつ連続的な参照
- * をサポートするクラスです。ただし、適切なジェネリック型変数を得るために、TypeScript
- * のコンパイラーオプション（`strict`もしくは少なくとも`strictNullChecks`）を指
- * 定する必要があります。
+ * プロパティへの`null-safety`かつ`undefined-safety`かつ`type-safety`かつ連続的
+ * なアクセスをサポートするクラスです。ただし、適切なジェネリック型変数を得るた
+ * めに、TypeScriptのコンパイラーオプション（`strict`もしくは少なくとも`strictNullChecks`）
+ * を指定する必要があります。
  * @example
  * const title = NullSafety.start(new JSDOM(html).window.document)
  *   .next(o => o.querySelector('#title'))
  *   .next(o => o.textContent, 'title-unfetched')
  *   .result();
  */
-export default class NullSafety<TSource> {
+export class NullSafety<TSource> {
   public static start<TSource>(
     source: TSource | null | undefined
   ): NullSafety<TSource> {

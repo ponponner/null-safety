@@ -1,40 +1,38 @@
-import NullSafety from '../src/null-safety';
+import { NullSafety } from '../src/null-safety';
+import {
+  msgForMapTest,
+  stringForAltResult,
+  //
+} from './test-utils';
 
-const strAltResult = 'string-alt-result';
+describe.skip('(!! check with eyes) types', () => {
+  const altResult = stringForAltResult;
+  // return: string | null | undefined
+  it('ref-comment', () => NullSafety.start('abcdefg').resultAlty(altResult));
+  // return: null
+  it('ref-comment', () => expect(NullSafety.start(null).resultAlty(null)));
+  // return: undefined
+  it('ref-comment', () =>
+    expect(NullSafety.start(undefined).resultAlty(undefined)));
+});
 
-// ----------------------------------------------------------------------
-// 値の取得、（ジェネリック型変数を処理した結果である）戻り値型についてのテスト
-// Notice:
-// - 戻り値の型については目視で確認する。
-// ----------------------------------------------------------------------
-// 元の値がNull-Likeでない場合
-(() => {
-  const getTitle = (source: any) => `returns ${source}`;
-
-  // 戻り値の型: string
-  test(getTitle('abcdefg'), () => {
-    const source = 'abcdefg';
-    expect(NullSafety.start(source).resultAlty(strAltResult)).toBe(source);
-  });
-})();
-
-// 元の値がNull-Likeの場合
-(() => {
-  const getTitle = (source: any, result: any) =>
-    `source is Null-Like, so returns altResult(source: ${source}, result: ${result})`;
-
-  // 戻り値の型: string
-  test(getTitle(null, strAltResult), () => {
-    const source = null;
-    const altResult = strAltResult;
-    const result = NullSafety.start<string>(source).resultAlty(altResult);
-    expect(result).toBe(altResult);
-  });
-  // 戻り値の型: string
-  test(getTitle(undefined, strAltResult), () => {
-    const source = undefined;
-    const altResult = strAltResult;
-    const result = NullSafety.start<string>(source).resultAlty(altResult);
-    expect(result).toBe(altResult);
-  });
-})();
+describe('NullSafety.result(...)', () => {
+  const altResult = stringForAltResult;
+  const cases = [
+    ['abcdefg', 'abcdefg'],
+    ['', ''],
+    [0, 0],
+    [false, false],
+    [null, altResult],
+    [undefined, altResult],
+    //
+  ];
+  for (const c of cases) {
+    const source = c[0];
+    const actual = NullSafety.start(source).resultAlty(altResult);
+    const expected = c[1];
+    it(msgForMapTest(source, expected), () => {
+      expect(actual).toBe(expected);
+    });
+  }
+});

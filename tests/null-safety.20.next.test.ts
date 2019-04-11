@@ -1,131 +1,77 @@
-import NullSafety from '../src/null-safety';
+import { NullSafety } from '../src/null-safety';
+import {
+  msgForMapTest,
+  stringForNull,
+  stringForUndefined,
+  stringForAltResult,
+  mapToNullLikeable,
+} from './test-utils';
 
-const strNull = 'string-null';
-const strUndefined = 'string-undefined';
-const strAltResult = 'string-alt-result';
+describe.skip('(!! check with eyes) types', () => {
+  const startEmpty = NullSafety.start('');
+  // arg: string
+  // return: NullSafety<string>
+  it('ref-comment', () => startEmpty.next(o => o.length));
+  it('ref-comment', () => startEmpty.next<string>(_ => null));
+  it('ref-comment', () => startEmpty.next<string>(_ => undefined));
+  it('ref-comment', () => startEmpty.next(_ => null as string | null));
+  it('ref-comment', () =>
+    startEmpty.next(_ => undefined as string | undefined));
+  // return: NullSafety<null>
+  it('ref-comment', () => startEmpty.next(_ => null));
+  // return: NullSafety<undefined>
+  it('ref-comment', () => startEmpty.next(_ => undefined));
+});
 
-const expectToBe = <TSource>(safety: NullSafety<TSource>, result: TSource) => {
-  expect((safety as any).source).toBe(result);
-  expect(safety.result()).toBe(result);
-};
-
-const getter = (source: string): string | null | undefined => {
-  switch (source) {
-    case strNull:
-      return null;
-    case strUndefined:
-      return undefined;
-    default:
-      return source + '-gettered';
+describe('NullSafety.next(...)', () => {
+  const getter = mapToNullLikeable;
+  const cases = [
+    // cases: maps to next-value
+    ['abcdefg', getter('abcdefg')],
+    ['', getter('')],
+    [0, getter(0)],
+    [false, getter(false)],
+    [stringForNull, getter(stringForNull)],
+    [stringForUndefined, getter(stringForUndefined)],
+    // cases: skips mapping to next-value
+    [null, null],
+    [undefined, undefined],
+  ];
+  for (const c of cases) {
+    const source = c[0];
+    const actual = NullSafety.start(source)
+      .next(getter)
+      .result();
+    const expected = c[1];
+    it(msgForMapTest(source, expected), () => {
+      expect(actual).toBe(expected);
+    });
   }
-};
+});
 
-// ----------------------------------------------------------------------
-// Getter関数の適用およびジェネリック型変数についてのテスト
-// Notice:
-// - ジェネリック型変数については目視で確認する。
-// ----------------------------------------------------------------------
-(() => {
-  const getTitle = (source: string) =>
-    `getter maps ${source} to ${getter(source)}`;
-
-  // #結果がNull-Like以外の値になる場合
-  // o: string
-  test(getTitle('abcdefg'), () => {
-    const source = 'abcdefg';
-    const safety = NullSafety.start(source).next(o => getter(o));
-    expectToBe(safety, getter(source));
-  });
-  // #結果がNull-Likeになる場合
-  test(getTitle(strNull), () => {
-    const source = strNull;
-    const safety = NullSafety.start(source).next(o => getter(o));
-    expectToBe(safety, getter(source));
-  });
-  test(getTitle(strUndefined), () => {
-    const source = strUndefined;
-    const safety = NullSafety.start(source).next(o => getter(o));
-    expectToBe(safety, getter(source));
-  });
-  // #`!value`などとしがちな値について、分岐でバグがないかテスト
-  // Notice: このケースでは、ジェネリック型変数の確認については不要。
-  test(getTitle(''), () => {
-    const source = '';
-    const safety = NullSafety.start(source).next(o => getter(o));
-    expectToBe(safety, getter(source));
-  });
-})();
-
-// ----------------------------------------------------------------------
-// Getter関数のスキップおよびジェネリック型変数についてのテスト
-// Notice:
-// - ジェネリック型変数については目視で確認する。
-// ----------------------------------------------------------------------
-(() => {
-  const getTitle = (source: any) =>
-    `source is Null-Like, so skipped getter(source: ${source})`;
-
-  // o: string
-  test(getTitle(null), () => {
-    const source = null;
-    const safety = NullSafety.start<string>(source).next(o => getter(o));
-    expectToBe(safety, source);
-  });
-  // o: string
-  test(getTitle(undefined), () => {
-    const source = undefined;
-    const safety = NullSafety.start<string>(source).next(o => getter(o));
-    expectToBe(safety, source);
-  });
-})();
-
-// ----------------------------------------------------------------------
-// altResulの適用およびジェネリック型変数についてのテスト
-// Notice:
-// - ジェネリック型変数については目視で確認する。
-// ----------------------------------------------------------------------
-// #元の値がNull-Likeの場合
-(() => {
-  const getTitle = (source: any, altResult: string) =>
-    `value for getter is Null-Like, so result is altResult(source:${source}, altResult:${altResult})`;
-
-  // o: string
-  test(getTitle(null, strAltResult), () => {
-    const source = null;
-    const altResult = strAltResult;
-    const safety = NullSafety.start<string>(source) //
-      .next(o => getter(o), altResult);
-    expectToBe(safety, altResult);
-  });
-  test(getTitle(undefined, strAltResult), () => {
-    const source = undefined;
-    const altResult = strAltResult;
-    const safety = NullSafety.start<string>(source) //
-      .next(o => getter(o), altResult);
-    expectToBe(safety, altResult);
-  });
-})();
-
-// #Getter関数から得られた値がNull-Likeの場合
-(() => {
-  const getTitle = (source: any, altResult: string) =>
-    `value from getter is Null-Like, so result is altResult ` +
-    `(source: ${source}, ` +
-    `value from getter:${getter(source)}, ` +
-    `altResult: ${altResult})`;
-
-  // o: string
-  test(getTitle(strNull, strAltResult), () => {
-    const source = strNull;
-    const altResult = strAltResult;
-    const safety = NullSafety.start(source).next(o => getter(o), altResult);
-    expectToBe(safety, altResult);
-  });
-  // o: string
-  test(getTitle(strUndefined, strAltResult), () => {
-    const source = strUndefined;
-    const altResult = strAltResult;
-    const safety = NullSafety.start(source).next(o => getter(o), altResult);
-    expectToBe(safety, altResult);
-  });
-})();
+describe('NullSafety.next(...) with altResult', () => {
+  const getter = mapToNullLikeable;
+  const altResult = stringForAltResult;
+  const cases = [
+    // cases: maps to altResult
+    [stringForNull, altResult],
+    [stringForUndefined, altResult],
+    [null, altResult],
+    [undefined, altResult],
+    // cases: maps to not-altResult
+    ['abcdefg', getter('abcdefg')],
+    ['', getter('')],
+    [0, getter(0)],
+    [false, getter(false)],
+  ];
+  for (const c of cases) {
+    const source = c[0];
+    const actual = NullSafety.start(source)
+      .next(getter, altResult)
+      .result();
+    const expected = c[1];
+    it(msgForMapTest(source, expected), () => {
+      expect(actual).toBe(expected);
+    });
+  }
+});

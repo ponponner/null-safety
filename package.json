@@ -1,25 +1,18 @@
 {
   "name": "null-safety",
   "version": "0.1.0",
-  "description": "",
+  "description": "null-safety is class which supports accessing to properties null-safety, undefined-safety, type-safety, sequentially.",
+  "main": "lib/null-safety.cjs.js",
+  "module": "lib/null-safety.esm.js",
+  "browser": "lib/null-safety.iife.js",
+  "types": "lib/types/null-safety.d.ts",
   "scripts": {
-    "type-check": "tsc --noEmit",
-    "type-check:watch": "npm run type-check -- --watch",
-    "build:types": "tsc --emitDeclarationOnly",
-    "build:js": "rollup -c",
-    "build": "npm run build:types && npm run build:js",
-    "test": "npx jest --verbose --coverage",
-    "test:watch": "npx jest --verbose --coverage --watch",
-    "test:coverage": "npx jest --coverage"
+    "postinstall": "npm run build",
+    "build": "rimraf ./lib/* && rollup -c",
+    "build:watch": "npm run build -- --watch",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
   },
-  "main": "dist/null-safe.cjs.js",
-  "module": "dist/null-safe.esm.js",
-  "browser": "dist/null-safe.iife.js",
-  "types": "dist/types/index.d.ts",
-  "author": {
-    "name": "ponponenr"
-  },
-  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
@@ -32,15 +25,35 @@
     "jest": "^24.7.1",
     "jsdom": "^14.0.0",
     "prettier": "1.16.4",
+    "rimraf": "^2.6.3",
     "rollup": "^1.9.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.2.1",
+    "rollup-plugin-typescript2": "^0.20.1",
     "ts-jest": "^24.0.2",
     "tslint": "^5.15.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.0.1",
     "typescript": "^3.4.2"
+  },
+  "keywords": [
+    "null-safety",
+    "undefined-safety",
+    "type-safety",
+    "sequentially"
+  ],
+  "homepage": "https://github.com/ponponner/null-safety",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ponponner/null-safety.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ponponner/null-safety/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "ponponenr"
   }
 }
