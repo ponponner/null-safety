@@ -3,7 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   verbose: true,
   collectCoverageFrom: ['src/**/*.ts'],
-  coverageDirectory: 'dest/coverage/',
+  // coverageDirectory: 'dest/coverage/',
   globals: {
     'ts-jest': {
       tsConfig: 'tests/tsconfig.json',

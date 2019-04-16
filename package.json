@@ -7,7 +7,6 @@
   "browser": "lib/null-safety.iife.js",
   "types": "lib/types/null-safety.d.ts",
   "scripts": {
-    "postinstall": "npm run build",
     "build": "rimraf ./lib/* && rollup -c",
     "build:watch": "npm run build -- --watch",
     "test": "jest --coverage",
