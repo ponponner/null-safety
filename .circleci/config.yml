@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run build
+      - run: npm run test:ci
+      - store_artifacts:
+          path: dest/coverage

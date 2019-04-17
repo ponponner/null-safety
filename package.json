@@ -10,7 +10,8 @@
     "build": "rimraf ./lib/* && rollup -c",
     "build:watch": "npm run build -- --watch",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:ci": "jest --forceExit --coverage"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",

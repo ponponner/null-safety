@@ -1,8 +1,8 @@
-# // dest
+dest
 node_modules
 
 # jest
-# // coverage
+coverage
 
 # rollup
 .rpt2_cache

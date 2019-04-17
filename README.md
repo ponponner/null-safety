@@ -1,5 +1,7 @@
 # null-safety
 
+[![CircleCI](https://circleci.com/gh/ponponner/null-safety.svg?style=svg)](https://circleci.com/gh/ponponner/null-safety)
+
 プロパティへの`null-safety`かつ`undefined-safety`かつ型安全かつ連続的な参照をサポートするクラス（を目指したもの）です。
 
 ### 利用例：
