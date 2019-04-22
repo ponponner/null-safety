@@ -1,6 +1,7 @@
 ## null-safety
 
 [![CircleCI](https://circleci.com/gh/ponponner/null-safety.svg?style=svg)](https://circleci.com/gh/ponponner/null-safety)
+[![Coverage Status](https://coveralls.io/repos/github/ponponner/null-safety/badge.svg?branch=develop)](https://coveralls.io/github/ponponner/null-safety?branch=develop)
 
 ## example：
 

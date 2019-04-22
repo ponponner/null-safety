@@ -8,5 +8,8 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npm run test:ci
-      - store_artifacts:
-          path: dest/coverage
+      # - store_artifacts:
+      #     path: dest/coverage
+      - run:
+          name: post coverage
+          command: cat ./dest/coverage/lcov.info | ./node_modules/.bin/coveralls
