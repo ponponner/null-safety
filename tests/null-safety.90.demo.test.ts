@@ -1,4 +1,4 @@
-import { NullSafety } from '../src/null-safety';
+import NullSafety from '../src/null-safety';
 import { JSDOM } from 'jsdom';
 
 describe('demo', () => {

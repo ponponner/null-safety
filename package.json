@@ -3,8 +3,7 @@
   "version": "0.1.2",
   "description": "null-safety is class which supports accessing to properties null-safety, undefined-safety, type-safety, sequentially.",
   "main": "lib/null-safety.cjs.js",
-  "module": "lib/null-safety.esm.js",
-  "browser": "lib/null-safety.iife.js",
+  "module": "lib/null-safety.mjs.js",
   "types": "lib/types/null-safety.d.ts",
   "scripts": {
     "build": "rimraf ./lib/* && rollup -c",

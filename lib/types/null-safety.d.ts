@@ -10,7 +10,7 @@ declare type Getter<TSource, TResult> = (source: TSource) => TResult;
  *   .next(o => o.textContent, 'title-unfetched')
  *   .result();
  */
-export declare class NullSafety<TSource> {
+export default class NullSafety<TSource> {
     static start<TSource>(source: TSource | null | undefined): NullSafety<TSource>;
     private source;
     constructor(source: TSource | null | undefined);
